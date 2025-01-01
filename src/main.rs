@@ -13,10 +13,14 @@ async fn main() {
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn handler(req: Request) -> String {
-    let (parts, _) = req.into_parts();
+async fn handler(request: Request) -> String {
+    let (parts, _) = request.into_parts();
 
-    format!("{parts:#?}")
+    let response_text = format!("{parts:#?}");
+
+    println!("{response_text}");
+
+    response_text
 }
 
 #[derive(clap::Parser, Debug)]
