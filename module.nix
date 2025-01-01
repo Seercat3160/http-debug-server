@@ -27,7 +27,7 @@
 
         serviceConfig = {
           Restart = "on-failure";
-          ExecStart = "${pkg}/bin/http-debug-server --port ${toString cfg.port}";
+          ExecStart = "${pkg}/bin/http-debug-server ${toString cfg.port}";
           DynamicUser = "yes";
         };
       };
