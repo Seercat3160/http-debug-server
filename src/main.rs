@@ -1,16 +1,16 @@
-use axum::{extract::Request, routing::get, Router};
+use axum::{extract::Request, handler::HandlerWithoutStateExt};
 use clap::Parser;
 
 #[tokio::main]
 async fn main() {
     let args = Args::parse();
 
-    let app = Router::new().route("/", get(handler));
-
     let listener = tokio::net::TcpListener::bind(format!("0.0.0.0:{}", args.port))
         .await
         .unwrap();
-    axum::serve(listener, app).await.unwrap();
+    axum::serve(listener, handler.into_make_service())
+        .await
+        .unwrap();
 }
 
 async fn handler(request: Request) -> String {
